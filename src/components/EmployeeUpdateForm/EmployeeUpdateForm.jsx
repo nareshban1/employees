@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "../Heading/Heading";
 import Header from "../Header/Header";
 import Button from "../Button/Button";
@@ -20,28 +20,41 @@ import {
   Input,
   TableInput,
   Form,
-} from "./EmployeeRegistrationForm.css";
+} from "../EmployeeRegistrationForm/EmployeeRegistrationForm.css";
 import { Link } from "react-router-dom";
 
-const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
+const EmployeeUpdateForm = ({
+  employeeDetails,
+  employeeData,
+  setEmployeeData,
+  objectIndex,
+}) => {
   const [employee, setEmployee] = useState({
-    name: "",
-    address: "",
-    phoneNo: "",
-    gender: "",
-    dob: "",
-    email: "",
+    id: employeeDetails.id,
+    name: employeeDetails.name,
+    address: employeeDetails.address,
+    phoneNo: employeeDetails.phoneNo,
+    gender: employeeDetails.gender,
+    dob: employeeDetails.dob,
+    email: employeeDetails.email,
   });
 
-  const [education, setEducation] = useState([
-    {
-      board: "",
-      institution: "",
-      passedYear: "",
-      percentage: 0,
-      grade: "",
-    },
-  ]);
+  const [education, setEducation] = useState();
+
+  useEffect(() => {
+    setEmployee({
+      id: employeeDetails.id,
+      name: employeeDetails.name,
+      address: employeeDetails.address,
+      phoneNo: employeeDetails.phoneNo,
+      gender: employeeDetails.gender,
+      dob: employeeDetails.dob,
+      email: employeeDetails.email,
+    });
+
+    setEducation(employeeDetails.education);
+  }, [employeeDetails]);
+
   const handleChange = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -92,17 +105,14 @@ const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
   };
 
   let navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = employeeData.length + 1;
-    setEmployeeData([
-      ...employeeData,
-      {
-        id: id,
-        ...employee,
-        education: [...education],
-      },
-    ]);
+    let items = [...employeeData];
+    let item = { ...items[objectIndex] };
+    item = { ...employee, education: [...education] };
+    items[objectIndex] = item;
+    setEmployeeData([...items]);
     navigate("/");
   };
 
@@ -230,7 +240,7 @@ const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
               </TableHeaderRow>
             </TableHeader>
             <tbody>
-              {education.map((element, index) => (
+              {education?.map((element, index) => (
                 <tr key={index}>
                   <EmployeeRow>
                     <TableInput
@@ -313,4 +323,4 @@ const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
   );
 };
 
-export default EmployeeRegistrationForm;
+export default EmployeeUpdateForm;

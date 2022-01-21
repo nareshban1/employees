@@ -11,8 +11,11 @@ import {
 
 import { IoIosArrowUp } from "react-icons/io";
 import Button from "../Button/Button";
+import DeleteModal from "../DeleteModal/DeleteModal";
+import EmployeeDetailsModal from "../EmployeeDetailsModal/EmployeeDetailsModal";
+import { Link } from "react-router-dom";
 
-const EmployeeTable = ({ employeeData }) => {
+const EmployeeTable = ({ employeeData, setEmployeeData }) => {
   const [sortKey, setSortKey] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
 
@@ -90,54 +93,96 @@ const EmployeeTable = ({ employeeData }) => {
     fontSize: "0.8rem",
   };
 
+  const [showDeletModal, setShowDeleteModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [selected, setSelected] = useState();
+
+  const openDeleteModal = (id) => {
+    setSelected(id);
+    setShowDeleteModal(true);
+  };
+  const openDetailsModal = (id) => {
+    setSelected(id);
+    setShowDetailsModal(true);
+  };
+
   return (
-    <EmployeeTableContainer>
-      <Table>
-        <TableHeader>
-          <TableHeaderRow>
-            {headers?.map((header) => (
-              <TableHeaderTab
-                key={header.key}
-                onClick={() => changeOrder(header.key)}
-              >
-                {header.label}
-                <SortArrow
-                  sortOrder={sortOrder}
-                  columnKey={header.key}
-                  sortKey={sortKey}
+    <>
+      <EmployeeTableContainer>
+        <Table>
+          <TableHeader>
+            <TableHeaderRow>
+              {headers?.map((header) => (
+                <TableHeaderTab
+                  key={header.key}
                   onClick={() => changeOrder(header.key)}
-                />
-              </TableHeaderTab>
+                >
+                  {header.label}
+                  <SortArrow
+                    sortOrder={sortOrder}
+                    columnKey={header.key}
+                    sortKey={sortKey}
+                    onClick={() => changeOrder(header.key)}
+                  />
+                </TableHeaderTab>
+              ))}
+              <TableHeaderTab>Action</TableHeaderTab>
+            </TableHeaderRow>
+          </TableHeader>
+          <tbody>
+            {sortedData?.map((employee) => (
+              <tr key={employee.id}>
+                <EmployeeRow>{employee.name}</EmployeeRow>
+                <EmployeeRow>{employee.address}</EmployeeRow>
+                <EmployeeRow>{employee.dob}</EmployeeRow>
+                <EmployeeRow>{employee.email}</EmployeeRow>
+                <EmployeeRow>{employee.phoneNo}</EmployeeRow>
+                <EmployeeRow>
+                  <Button
+                    text={"View"}
+                    type={"button"}
+                    styles={buttonStyles}
+                    handleClick={() => openDetailsModal(employee.id)}
+                  />
+                  <Link to={`/updateemployee/${employee.id}`}>
+                    <Button
+                      text={"Update"}
+                      type={"button"}
+                      styles={updateButtonStyles}
+                    />
+                  </Link>
+                  <Button
+                    text={"Delete"}
+                    type={"button"}
+                    styles={deleteButtonStyles}
+                    handleClick={() => openDeleteModal(employee.id)}
+                  />
+                </EmployeeRow>
+              </tr>
             ))}
-            <TableHeaderTab>Action</TableHeaderTab>
-          </TableHeaderRow>
-        </TableHeader>
-        <tbody>
-          {sortedData?.map((employee) => (
-            <tr key={employee.id}>
-              <EmployeeRow>{employee.name}</EmployeeRow>
-              <EmployeeRow>{employee.address}</EmployeeRow>
-              <EmployeeRow>{employee.dob}</EmployeeRow>
-              <EmployeeRow>{employee.email}</EmployeeRow>
-              <EmployeeRow>{employee.phoneNo}</EmployeeRow>
-              <EmployeeRow>
-                <Button text={"View"} type={"button"} styles={buttonStyles} />
-                <Button
-                  text={"Update"}
-                  type={"button"}
-                  styles={updateButtonStyles}
-                />
-                <Button
-                  text={"Delete"}
-                  type={"button"}
-                  styles={deleteButtonStyles}
-                />
-              </EmployeeRow>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </EmployeeTableContainer>
+          </tbody>
+        </Table>
+      </EmployeeTableContainer>
+      <>
+        {showDeletModal && (
+          <DeleteModal
+            setShowDeleteModal={setShowDeleteModal}
+            setEmployeeData={setEmployeeData}
+            employeeData={employeeData}
+            id={selected}
+          />
+        )}
+      </>
+      <>
+        {showDetailsModal && (
+          <EmployeeDetailsModal
+            setShowDetailsModal={setShowDetailsModal}
+            employeeData={employeeData}
+            id={selected}
+          />
+        )}
+      </>
+    </>
   );
 };
 

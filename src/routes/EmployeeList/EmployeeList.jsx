@@ -5,12 +5,10 @@ import EmployeeTable from "../../components/EmployeeTable/EmployeeTable";
 import Header from "../../components/Header/Header";
 import Heading from "../../components/Heading/Heading";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { employees } from "../../Data/employeeData";
 
-const EmployeeList = () => {
+const EmployeeList = ({ employeeData, setEmployeeData }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [employeeData, setEmployeeData] = useState(employees);
-
+  const [employees, setEmployees] = useState(employeeData);
   const buttonStyles = {
     color: "black",
     backgroundColor: "white",
@@ -18,16 +16,15 @@ const EmployeeList = () => {
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
-      if (searchQuery.length > 3) {
+      if (searchQuery.length > 0) {
         let filteredData = employees.filter((data) =>
           Object.keys(data).some(
             (k) => data[k].toString().toLowerCase().indexOf(searchQuery) !== -1
           )
         );
-        setEmployeeData(filteredData);
-        console.log(filteredData);
+        setEmployees(filteredData);
       } else {
-        setEmployeeData(employees);
+        setEmployees(employeeData);
         alert("Search Query must have more than 3 characters");
       }
     }
@@ -47,7 +44,10 @@ const EmployeeList = () => {
         />
       </Header>
 
-      <EmployeeTable employeeData={employeeData} />
+      <EmployeeTable
+        employeeData={employees}
+        setEmployeeData={setEmployeeData}
+      />
     </div>
   );
 };

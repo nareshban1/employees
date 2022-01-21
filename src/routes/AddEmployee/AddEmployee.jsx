@@ -2,11 +2,14 @@ import React from "react";
 import EmployeeRegistrationForm from "../../components/EmployeeRegistrationForm/EmployeeRegistrationForm";
 import Heading from "../../components/Heading/Heading";
 
-const AddEmployee = () => {
+const AddEmployee = ({ employeeData, setEmployeeData }) => {
   return (
     <>
       <Heading text={"Employee Registration Form"} />
-      <EmployeeRegistrationForm />
+      <EmployeeRegistrationForm
+        setEmployeeData={setEmployeeData}
+        employeeData={employeeData}
+      />
     </>
   );
 };
