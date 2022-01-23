@@ -17,7 +17,7 @@ const EmployeeList = ({ employeeData, setEmployeeData }) => {
   const handleSearch = (e) => {
     if (e.key === "Enter") {
       if (searchQuery.length > 0) {
-        let filteredData = employees.filter((data) =>
+        let filteredData = employeeData.filter((data) =>
           Object.keys(data).some(
             (k) => data[k].toString().toLowerCase().indexOf(searchQuery) !== -1
           )

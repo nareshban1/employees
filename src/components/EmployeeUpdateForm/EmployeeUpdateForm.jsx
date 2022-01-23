@@ -17,12 +17,11 @@ import {
   GenderLabel,
   Label,
   GenderInputGroup,
-  Input,
-  TableInput,
   Form,
+  InputWrapper,
 } from "../EmployeeRegistrationForm/EmployeeRegistrationForm.css";
 import { Link } from "react-router-dom";
-
+import FormInput from "../FormInput/FormInput";
 const EmployeeUpdateForm = ({
   employeeDetails,
   employeeData,
@@ -39,7 +38,7 @@ const EmployeeUpdateForm = ({
     email: employeeDetails.email,
   });
 
-  const [education, setEducation] = useState();
+  const [education, setEducation] = useState(employeeDetails?.education);
 
   useEffect(() => {
     setEmployee({
@@ -121,46 +120,60 @@ const EmployeeUpdateForm = ({
       <Form onSubmit={handleSubmit}>
         <FormGridGroup>
           <Label>
-            Name *
-            <Input
-              type={"text"}
-              value={employee.name}
-              onChange={handleChange}
-              name="name"
-              placeholder="Full Name"
-              required
-            />
+            Name *{" "}
+            <InputWrapper>
+              <FormInput
+                type={"text"}
+                value={employee.name}
+                onChange={handleChange}
+                name="name"
+                placeholder="Full Name"
+                required
+                pattern="^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$"
+                errorMessage="Name shouldn't include any special character or numbers"
+              />
+            </InputWrapper>
           </Label>
 
           <Label>
-            Address *
-            <Input
-              type={"text"}
-              value={employee.address}
-              onChange={handleChange}
-              name="address"
-              placeholder="Current Address"
-              required
-            />
+            Address *{" "}
+            <InputWrapper>
+              <FormInput
+                type={"text"}
+                value={employee.address}
+                onChange={handleChange}
+                name="address"
+                placeholder="Current Address"
+                required
+                errorMessage={"Please input employee address"}
+              />
+            </InputWrapper>
           </Label>
 
           <Label>
-            Date of Birth *
-            <Input
-              type={"date"}
-              value={employee.dob}
-              onChange={handleChange}
-              name="dob"
-              max={today}
-              required
-            />
+            Date of Birth *{" "}
+            <InputWrapper>
+              <FormInput
+                type={"date"}
+                value={employee.dob}
+                onChange={handleChange}
+                name="dob"
+                max={today}
+                required
+                errorMessage={
+                  employee.dob > today
+                    ? "Date of birth cannot be later than today"
+                    : "Please input date of birth"
+                }
+              />
+            </InputWrapper>
           </Label>
 
           <GenderGroup>
             Gender *
             <GenderInputGroup>
               <GenderLabel>
-                <input
+                <FormInput
                   type="radio"
                   name="gender"
                   value="Male"
@@ -171,7 +184,7 @@ const EmployeeUpdateForm = ({
                 &nbsp; Male
               </GenderLabel>
               <GenderLabel>
-                <input
+                <FormInput
                   type="radio"
                   name="gender"
                   value="Female"
@@ -182,7 +195,7 @@ const EmployeeUpdateForm = ({
                 &nbsp; Female
               </GenderLabel>
               <GenderLabel>
-                <input
+                <FormInput
                   type="radio"
                   name="gender"
                   value="Other"
@@ -196,26 +209,33 @@ const EmployeeUpdateForm = ({
           </GenderGroup>
 
           <Label>
-            Email *
-            <Input
-              type={"text"}
-              value={employee.email}
-              onChange={handleChange}
-              name="email"
-              placeholder="Email"
-              required
-            />
+            Email *{" "}
+            <InputWrapper>
+              <FormInput
+                type={"email"}
+                value={employee.email}
+                onChange={handleChange}
+                name="email"
+                placeholder="Email"
+                required
+                errorMessage="Please enter a valid email address"
+              />
+            </InputWrapper>
           </Label>
           <Label>
-            Phone Number *
-            <Input
-              type={"text"}
-              value={employee.phoneNo}
-              onChange={handleChange}
-              name="phoneNo"
-              placeholder="Phone Number"
-              required
-            />
+            Phone Number *{" "}
+            <InputWrapper>
+              <FormInput
+                type={"text"}
+                value={employee.phoneNo}
+                onChange={handleChange}
+                name="phoneNo"
+                placeholder="Phone Number"
+                required
+                pattern="(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?"
+                errorMessage="Please enter a valid phone number"
+              />
+            </InputWrapper>
           </Label>
         </FormGridGroup>
         <Header>
@@ -243,37 +263,40 @@ const EmployeeUpdateForm = ({
               {education?.map((element, index) => (
                 <tr key={index}>
                   <EmployeeRow>
-                    <TableInput
+                    <FormInput
                       type={"text"}
                       value={element.board}
                       onChange={(e) => handleEducationChange(e, index)}
                       name="board"
                       placeholder="Board"
                       required
+                      errorMessage={"Please enter a board name"}
                     />
                   </EmployeeRow>
                   <EmployeeRow>
-                    <TableInput
+                    <FormInput
                       type={"text"}
                       value={element.institution}
                       onChange={(e) => handleEducationChange(e, index)}
                       name="institution"
                       placeholder="Inititution Name"
                       required
+                      errorMessage={"Please enter a institution name"}
                     />
                   </EmployeeRow>
                   <EmployeeRow>
-                    <TableInput
+                    <FormInput
                       type={"text"}
                       value={element.passedYear}
                       onChange={(e) => handleEducationChange(e, index)}
                       name="passedYear"
                       placeholder="Year Passed"
                       required
+                      errorMessage={"Please enter a Passed Year"}
                     />
                   </EmployeeRow>
                   <EmployeeRow>
-                    <TableInput
+                    <FormInput
                       type={"number"}
                       value={element.percentage}
                       onChange={(e) => handleEducationChange(e, index)}
@@ -282,16 +305,18 @@ const EmployeeUpdateForm = ({
                       required
                       max={100}
                       min={0}
+                      errorMessage="Percentage should not be lower than 0 or greater than 100"
                     />
                   </EmployeeRow>
                   <EmployeeRow>
-                    <TableInput
+                    <FormInput
                       type={"text"}
                       value={element.grade}
                       onChange={(e) => handleEducationChange(e, index)}
                       name="grade"
                       placeholder="Grade Acquired"
                       required
+                      errorMessage="Please enter the grade acquired"
                     />
                   </EmployeeRow>
 
