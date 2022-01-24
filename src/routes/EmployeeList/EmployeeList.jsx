@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import EmployeeTable from "../../components/EmployeeTable/EmployeeTable";
 import Header from "../../components/Header/Header";
 import Heading from "../../components/Heading/Heading";
 import SearchBar from "../../components/SearchBar/SearchBar";
+import { employeeDataContext } from "../../Utilities/EmployeeProvider";
 
-const EmployeeList = ({ employeeData, setEmployeeData }) => {
+const EmployeeList = () => {
   const [searchQuery, setSearchQuery] = useState("");
+
+  const { employeeData } = useContext(employeeDataContext);
   const [employees, setEmployees] = useState(employeeData);
   const buttonStyles = {
     color: "black",
@@ -48,10 +51,7 @@ const EmployeeList = ({ employeeData, setEmployeeData }) => {
         />
       </Header>
 
-      <EmployeeTable
-        employeeData={employees}
-        setEmployeeData={setEmployeeData}
-      />
+      <EmployeeTable employees={employees} />
     </div>
   );
 };

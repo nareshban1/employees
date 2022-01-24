@@ -15,7 +15,7 @@ import DeleteModal from "../DeleteModal/DeleteModal";
 import EmployeeDetailsModal from "../EmployeeDetailsModal/EmployeeDetailsModal";
 import { Link } from "react-router-dom";
 
-const EmployeeTable = ({ employeeData, setEmployeeData }) => {
+const EmployeeTable = ({ employees }) => {
   const [sortKey, setSortKey] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
 
@@ -59,10 +59,10 @@ const EmployeeTable = ({ employeeData, setEmployeeData }) => {
   };
 
   //sorting method for all the columns
-  const sortData = (employees, sortKey, reverse) => {
-    if (!sortKey) return employees;
+  const sortData = (employeesData, sortKey, reverse) => {
+    if (!sortKey) return employeesData;
 
-    const sortedData = employees.sort((a, b) => {
+    const sortedData = employeesData.sort((a, b) => {
       return a[sortKey] > b[sortKey] ? 1 : -1;
     });
 
@@ -73,8 +73,8 @@ const EmployeeTable = ({ employeeData, setEmployeeData }) => {
   };
 
   const sortedData = useMemo(() => {
-    return sortData(employeeData, sortKey, sortOrder === "desc");
-  }, [employeeData, sortKey, sortOrder]);
+    return sortData(employees, sortKey, sortOrder === "desc");
+  }, [employees, sortKey, sortOrder]);
 
   const buttonStyles = {
     color: "white",
@@ -167,8 +167,7 @@ const EmployeeTable = ({ employeeData, setEmployeeData }) => {
         {showDeletModal && (
           <DeleteModal
             setShowDeleteModal={setShowDeleteModal}
-            setEmployeeData={setEmployeeData}
-            employeeData={employeeData}
+            employeeData={employees}
             id={selected}
           />
         )}
@@ -177,7 +176,7 @@ const EmployeeTable = ({ employeeData, setEmployeeData }) => {
         {showDetailsModal && (
           <EmployeeDetailsModal
             setShowDetailsModal={setShowDetailsModal}
-            employeeData={employeeData}
+            employeeData={employees}
             id={selected}
           />
         )}

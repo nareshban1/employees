@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import EmployeeUpdateForm from "../../components/EmployeeUpdateForm/EmployeeUpdateForm";
 import Heading from "../../components/Heading/Heading";
-const UpdateEmployee = ({ setEmployeeData, employeeData }) => {
+import { employeeDataContext } from "../../Utilities/EmployeeProvider";
+const UpdateEmployee = () => {
+  const { employeeData } = useContext(employeeDataContext);
   const [employeeDetails, setEmployeeDetails] = useState({});
   const [objectIndex, setObjectIndex] = useState();
 
@@ -27,9 +29,7 @@ const UpdateEmployee = ({ setEmployeeData, employeeData }) => {
       <Heading text={"Update Employee Details"} />
       {Object.keys(employeeDetails).length !== 0 && (
         <EmployeeUpdateForm
-          setEmployeeData={setEmployeeData}
           employeeDetails={employeeDetails}
-          employeeData={employeeData}
           objectIndex={objectIndex}
         />
       )}

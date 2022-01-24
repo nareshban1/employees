@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Heading from "../Heading/Heading";
 import Header from "../Header/Header";
 import Button from "../Button/Button";
@@ -22,8 +22,11 @@ import {
 } from "./EmployeeRegistrationForm.css";
 import { Link } from "react-router-dom";
 import FormInput from "../FormInput/FormInput";
+import { employeeDataContext } from "../../Utilities/EmployeeProvider";
 
-const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
+const EmployeeRegistrationForm = () => {
+  const { employeeData, setEmployeeData } = useContext(employeeDataContext);
+
   const [employee, setEmployee] = useState({
     name: "",
     address: "",
@@ -94,7 +97,7 @@ const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
   let navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    const id = employeeData.length + 1;
+    const id = employeeData[employeeData.length - 1].id + 1;
     setEmployeeData([
       ...employeeData,
       {

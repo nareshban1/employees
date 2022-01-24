@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Heading from "../Heading/Heading";
 import Header from "../Header/Header";
 import Button from "../Button/Button";
@@ -22,12 +22,10 @@ import {
 } from "../EmployeeRegistrationForm/EmployeeRegistrationForm.css";
 import { Link } from "react-router-dom";
 import FormInput from "../FormInput/FormInput";
-const EmployeeUpdateForm = ({
-  employeeDetails,
-  employeeData,
-  setEmployeeData,
-  objectIndex,
-}) => {
+import { employeeDataContext } from "../../Utilities/EmployeeProvider";
+const EmployeeUpdateForm = ({ employeeDetails, objectIndex }) => {
+  const { employeeData, setEmployeeData } = useContext(employeeDataContext);
+
   const [employee, setEmployee] = useState({
     id: employeeDetails.id,
     name: employeeDetails.name,

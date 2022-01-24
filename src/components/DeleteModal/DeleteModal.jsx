@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "../Button/Button";
 import {
   DeleteModalButtons,
@@ -11,13 +11,11 @@ import {
   ModalContainer,
   ModalHeader,
 } from "../../CommonStyles/CommonStyles.css";
+import { employeeDataContext } from "../../Utilities/EmployeeProvider";
 
-const DeleteModal = ({
-  setShowDeleteModal,
-  id,
-  setEmployeeData,
-  employeeData,
-}) => {
+const DeleteModal = ({ setShowDeleteModal, id, employeeData }) => {
+  const { setEmployeeData } = useContext(employeeDataContext);
+
   const buttonStyle = {
     color: "white",
     backgroundColor: "#db965e",
