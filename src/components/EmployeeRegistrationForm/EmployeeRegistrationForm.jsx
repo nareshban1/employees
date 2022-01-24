@@ -172,7 +172,7 @@ const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
                   onChange={handleChange}
                   required
                 />
-                &nbsp; Male
+                Male
               </GenderLabel>
               <GenderLabel>
                 <FormInput
@@ -183,7 +183,7 @@ const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
                   onChange={handleChange}
                   required
                 />
-                &nbsp; Female
+                Female
               </GenderLabel>
               <GenderLabel>
                 <FormInput
@@ -194,13 +194,13 @@ const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
                   onChange={handleChange}
                   required
                 />
-                &nbsp; Other
+                Other
               </GenderLabel>
             </GenderInputGroup>
           </GenderGroup>
 
           <Label>
-            Email *{" "}
+            Email *
             <InputWrapper>
               <FormInput
                 type={"email"}
@@ -214,7 +214,7 @@ const EmployeeRegistrationForm = ({ employeeData, setEmployeeData }) => {
             </InputWrapper>
           </Label>
           <Label>
-            Phone Number *{" "}
+            Phone Number *
             <InputWrapper>
               <FormInput
                 type={"text"}

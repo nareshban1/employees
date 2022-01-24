@@ -14,7 +14,11 @@ align-items: center;
 
 export const GenderLabel = styled.label`
 display: flex;
+flex-direction: row;
 align-items: center;
+width: 100%;
+padding-right: 20px;
+
 `
 
 export const GenderInputGroup = styled.label`
@@ -22,6 +26,7 @@ display: flex;
 align-items: center;
 width: 50%;
 justify-content: space-between;
+
 `
 
 export const InputWrapper = styled.div`
