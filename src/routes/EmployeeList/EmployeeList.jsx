@@ -25,7 +25,7 @@ const EmployeeList = ({ employeeData, setEmployeeData }) => {
         setEmployees(filteredData);
       } else {
         setEmployees(employeeData);
-        alert("Search Query must have more than 3 characters");
+        // alert("Search Query must have more than 3 characters");
       }
     }
   };
