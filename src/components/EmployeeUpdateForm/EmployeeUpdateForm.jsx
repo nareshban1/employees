@@ -38,7 +38,7 @@ const EmployeeUpdateForm = ({
     email: employeeDetails.email,
   });
 
-  const [education, setEducation] = useState(employeeDetails?.education);
+  const [education, setEducation] = useState(employeeDetails.education);
 
   useEffect(() => {
     setEmployee({

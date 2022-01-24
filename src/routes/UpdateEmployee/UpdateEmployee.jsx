@@ -21,17 +21,18 @@ const UpdateEmployee = ({ setEmployeeData, employeeData }) => {
     );
 
     getEmployee();
-  }, []);
-
+  }, [employeeData, params.id]);
   return (
     <>
       <Heading text={"Update Employee Details"} />
-      <EmployeeUpdateForm
-        setEmployeeData={setEmployeeData}
-        employeeDetails={employeeDetails}
-        employeeData={employeeData}
-        objectIndex={objectIndex}
-      />
+      {Object.keys(employeeDetails).length !== 0 && (
+        <EmployeeUpdateForm
+          setEmployeeData={setEmployeeData}
+          employeeDetails={employeeDetails}
+          employeeData={employeeData}
+          objectIndex={objectIndex}
+        />
+      )}
     </>
   );
 };

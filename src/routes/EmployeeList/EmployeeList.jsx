@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import EmployeeTable from "../../components/EmployeeTable/EmployeeTable";
@@ -17,7 +17,7 @@ const EmployeeList = ({ employeeData, setEmployeeData }) => {
   const handleSearch = (e) => {
     if (e.key === "Enter") {
       if (searchQuery.length > 0) {
-        let filteredData = employeeData.filter((data) =>
+        let filteredData = employees?.filter((data) =>
           Object.keys(data).some(
             (k) => data[k].toString().toLowerCase().indexOf(searchQuery) !== -1
           )
@@ -29,6 +29,10 @@ const EmployeeList = ({ employeeData, setEmployeeData }) => {
       }
     }
   };
+
+  useEffect(() => {
+    setEmployees(employeeData);
+  }, [employeeData]);
 
   return (
     <div>

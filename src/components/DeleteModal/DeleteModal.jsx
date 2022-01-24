@@ -33,7 +33,8 @@ const DeleteModal = ({
     setShowDeleteModal(false);
   };
   const deleteEmployee = () => {
-    setEmployeeData(employeeData.filter((employee) => employee.id !== id));
+    let items = employeeData.filter((employee) => employee.id !== id);
+    setEmployeeData([...items]);
     setShowDeleteModal(false);
   };
 
